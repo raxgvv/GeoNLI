@@ -1,0 +1,14 @@
+torch>=2.1.0
+transformers>=4.57.0
+accelerate>=0.27.0
+deepspeed>=0.13.0
+wandb>=0.16.0
+python-dotenv
+scikit-learn
+pandas
+numpy
+Pillow
+tqdm
+pyyaml
+sentencepiece
+protobuf

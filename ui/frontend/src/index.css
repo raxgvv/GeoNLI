@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   "Field Atlas" design tokens
+   Light (paper) is the default; html.dark switches to Night chart.
+------------------------------------------------------------------ */
+:root {
+	color-scheme: light;
+
+	--backdrop: #ede8dd;
+	--surface: rgba(255, 252, 246, 0.82);
+	--surface-solid: #fffcf6;
+	--border: #d6cdb9;
+	--ink: #1b2433;
+	--muted: #6a7384;
+	--accent: #e4572e; /* vermilion — graphics, indicators, overlays */
+	--accent-fill: #c44724; /* deeper vermilion for filled controls (AA with white) */
+	--accent-text: #b8431f; /* vermilion as text/icon colour (AA on light surfaces) */
+	--on-accent: #ffffff;
+	--info: #2f5d8a; /* survey blue */
+	--info-soft: rgba(47, 93, 138, 0.12);
+	--success: #217046;
+	--warning: #8a5e00;
+	--danger: #c0392b;
+
+	--accent-soft: rgba(228, 87, 46, 0.12);
+	--danger-soft: rgba(192, 57, 43, 0.1);
+	--success-soft: rgba(33, 112, 70, 0.12);
+	--warning-soft: rgba(138, 94, 0, 0.14);
+
+	--float-shadow: 0 1px 2px rgba(27, 36, 51, 0.06), 0 2px 6px -2px rgba(27, 36, 51, 0.1),
+		0 16px 40px -16px rgba(27, 36, 51, 0.28);
+	--blur: 16px;
+}
+
+html.dark {
+	color-scheme: dark;
+
+	--backdrop: #0e1320;
+	--surface: rgba(22, 29, 46, 0.78);
+	--surface-solid: #161d2e;
+	--border: #2a3552;
+	--ink: #eceff6;
+	--muted: #98a2b8;
+	--accent: #ff7a4d;
+	--accent-fill: #ff7a4d;
+	--accent-text: #ff7a4d;
+	--on-accent: #12161f;
+	--info: #7fb2e5;
+	--info-soft: rgba(127, 178, 229, 0.16);
+	--success: #4ea975;
+	--warning: #e8b24a;
+	--danger: #ef7a73;
+
+	--accent-soft: rgba(255, 122, 77, 0.16);
+	--danger-soft: rgba(239, 122, 115, 0.14);
+	--success-soft: rgba(78, 169, 117, 0.14);
+	--warning-soft: rgba(232, 178, 74, 0.16);
+
+	--float-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 8px -2px rgba(0, 0, 0, 0.5),
+		0 20px 44px -18px rgba(0, 0, 0, 0.75);
+}
+
+@theme inline {
+	--color-backdrop: var(--backdrop);
+	--color-surface: var(--surface);
+	--color-surface-solid: var(--surface-solid);
+	--color-line: var(--border);
+	--color-ink: var(--ink);
+	--color-muted: var(--muted);
+	--color-accent: var(--accent);
+	--color-accent-fill: var(--accent-fill);
+	--color-accent-text: var(--accent-text);
+	--color-accent-soft: var(--accent-soft);
+	--color-on-accent: var(--on-accent);
+	--color-info: var(--info);
+	--color-info-soft: var(--info-soft);
+	--color-success: var(--success);
+	--color-success-soft: var(--success-soft);
+	--color-warning: var(--warning);
+	--color-warning-soft: var(--warning-soft);
+	--color-danger: var(--danger);
+	--color-danger-soft: var(--danger-soft);
+
+	--font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+	--font-sans: "DM Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+		Roboto, sans-serif;
+	--font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	--radius-lg: 14px;
+	--radius-xl: 20px;
+	--radius-2xl: 24px;
+
+	--shadow-float: var(--float-shadow);
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------ */
+html,
+body,
+#root {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+body {
+	background-color: var(--backdrop);
+	color: var(--ink);
+	font-family: var(--font-sans);
+	font-size: 14px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+	border-radius: 999px;
+}
+
+::selection {
+	background: rgba(228, 87, 46, 0.24);
+}
+
+/* Thin, theme-matching scrollbars */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--border) transparent;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--border);
+	background-clip: content-box;
+	border: 3px solid transparent;
+	border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--muted);
+	background-clip: content-box;
+}
+
+@layer utilities {
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+/* ------------------------------------------------------------------
+   Floating overlay layer — "Hide UI" fades every panel at once
+------------------------------------------------------------------ */
+.ui-layer {
+	transition: opacity 220ms ease;
+}
+
+.ui-hidden .ui-layer {
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* Grounding overlays: vermilion, 2px, 12% fill */
+.bbox-polygon {
+	stroke: var(--accent);
+	stroke-width: 2px;
+	vector-effect: non-scaling-stroke;
+	fill: color-mix(in srgb, var(--accent) 12%, transparent);
+	animation: bbox-pulse 2.4s ease-in-out infinite;
+}
+
+.bbox-label {
+	fill: var(--accent);
+	font-weight: 700;
+	paint-order: stroke;
+	stroke: rgba(255, 255, 255, 0.85);
+	stroke-width: 0.6px;
+	vector-effect: non-scaling-stroke;
+}
+
+@keyframes bbox-pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.6;
+	}
+}
+
+/* Caption generation shimmer */
+.shimmer {
+	background-image: linear-gradient(
+		100deg,
+		transparent 20%,
+		color-mix(in srgb, var(--accent) 20%, transparent) 45%,
+		transparent 70%
+	);
+	background-size: 220% 100%;
+	animation: shimmer-slide 1.4s linear infinite;
+}
+
+@keyframes shimmer-slide {
+	from {
+		background-position: 140% 0;
+	}
+	to {
+		background-position: -60% 0;
+	}
+}
+
+/* Motion: panels and messages, 200–280ms */
+@keyframes fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.animate-fade-up {
+	animation: fade-up 220ms ease-out both;
+}
+
+@keyframes slide-in-right {
+	from {
+		opacity: 0;
+		transform: translateX(28px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.animate-slide-in-right {
+	animation: slide-in-right 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes expand-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px) scale(0.98);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.animate-expand-in {
+	animation: expand-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes rise-in {
+	from {
+		opacity: 0;
+		transform: translateY(14px) scale(0.97);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.animate-rise-in {
+	animation: rise-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

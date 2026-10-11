@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/geoNLI/eval",
+      "destination": "/api/geoNLI/eval"
+    }
+  ]
+}

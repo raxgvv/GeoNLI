@@ -1,0 +1,105 @@
+# ---- Secrets and environment files ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# ---- Python bytecode and caches ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Virtual environments / conda ----
+.venv/
+venv/
+env/
+ENV/
+conda-env/
+# Conda environment directories inside the project
+build/conda/
+*.conda
+
+# ---- Logs ----
+*.log
+logs/
+geonli.log
+
+# ---- Temporary / upload directories ----
+backend/temp_uploads/
+tmp/
+temp/
+*.tmp
+
+# ---- Hugging Face caches and model downloads ----
+.cache/
+hub/
+*.safetensors
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.bin
+
+# ---- SAM3 generated outputs and uploads ----
+models/sam3/user_uploads/
+models/sam3/output.jpg
+models/sam3/final_output.json
+models/sam3/intermediate_output.json
+models/sam3/.git/
+models/sam3/__pycache__/
+
+# ---- Local model weights / checkpoints (source code is tracked) ----
+models/captioning-model/state/
+models/captioning-model/training_state.json
+models/Image cleaning/
+models/SAR2Optical/*.pth
+models/SAR2Optical/output.png
+models/SAR2Optical/output.jpg
+models/SAR2Optical/output.json
+models/SAR2Optical/final_output.json
+models/SAR2Optical/intermediate_output.json
+models/SAR2Optical/__pycache__/
+models/SAR2Optical/src/__pycache__/
+models/SAR2Optical/utils/__pycache__/
+
+# ---- Duplicate scratch copies (not part of the project) ----
+"models/SAR2Optical (2)/"
+"Extra Resourse/"
+
+# ---- Generated evaluation outputs ----
+VQA-fine-tuning/predictions.jsonl
+VQA-fine-tuning/output/
+wandb/
+runs/
+
+# ---- Frontend (root-level fallback; ui/frontend/.gitignore also applies) ----
+node_modules/
+dist/
+dist-ssr/
+.vercel
+*.local
+
+# ---- IDE / editor configuration ----
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.swp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ---- OS files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Root-level stray lock file (frontend lockfile lives in ui/frontend) ----
+package-lock.json

@@ -1,0 +1,34 @@
+model:
+  name_or_path: "Qwen/Qwen3-VL-8B-Instruct" 
+  use_flash_attn: true
+
+data:
+  train_path: "data/processed/train.jsonl"
+  val_path: "data/processed/val.jsonl"
+  image_dir: "../VRSBench/Images_train" # Assuming relative path or absolute
+  num_workers: 4
+
+training:
+  seed: 42
+  per_device_batch_size: 4
+  gradient_accumulation_steps: 4
+  num_epochs: 3
+  learning_rate: 2.0e-5
+  backbone_lr: 5.0e-6
+  lm_head_lr: 2.0e-5
+  weight_decay: 0.01
+  adam_eps: 1.0e-8
+  max_grad_norm: 1.0
+  warmup_ratio: 0.03
+  lr_scheduler_type: "cosine"
+  mixed_precision: "bf16"
+  save_steps: 100
+  task_weights:
+    binary: 1.0
+    numeric: 1.0
+    semantic: 1.0
+
+logging:
+  log_dir: "logs/dev"
+  output_dir: "checkpoints/dev"
+  log_steps: 10

@@ -33,3 +33,4 @@ portalocker==3.2.0
 pycocotools==2.0.10
 timm==1.0.22
 regex==2025.11.3
+bootstrap==5.38
